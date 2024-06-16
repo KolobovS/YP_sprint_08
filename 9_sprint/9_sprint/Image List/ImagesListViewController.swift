@@ -47,8 +47,6 @@ final class ImagesListViewController: UIViewController{
                 tableView.insertRows(at: indexPaths, with: .automatic)
             }, completion: nil)
         }
-        
-        print(photos.count)
     }
     
     func tableView(
@@ -58,8 +56,6 @@ final class ImagesListViewController: UIViewController{
     ) {
         if indexPath.row + 1 == photos.count {
             ImagesListService.shared.fetchPhotosNextPage()
-        } else {
-//            return
         }
     }
 }
@@ -124,8 +120,6 @@ extension ImagesListViewController: ImagesListCellDelegate {
                             isLiked: !currentPhoto.isLiked
                         )
                         self.photos[index] = updatedPhoto
-//                        self.photos.remove(at: index)
-//                        self.photos.insert(updatedPhoto, at: index)
                     }
                 case .failure(let error):
                     print("Error changing like: \(error)")
@@ -142,13 +136,9 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: "\(indexPath.row)") else {
-            return 200
-        }
-        
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+     let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let scale = imageViewWidth / image.size.width
+        let scale = imageViewWidth / photos[indexPath.row].size.width
         let cellHeight = photos[indexPath.row].size.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
     }

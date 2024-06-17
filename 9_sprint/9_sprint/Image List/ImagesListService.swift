@@ -6,7 +6,7 @@ final class ImagesListService {
     static let shared = ImagesListService()
     private (set) var photos: [Photo] = []
     private var isFetching = false
-    private var currentPage = 0
+    private var currentPage = 1
     private let itemsPerPage = 10
     private let dateFormatter: ISO8601DateFormatter = {
         let dateFormatter = ISO8601DateFormatter()

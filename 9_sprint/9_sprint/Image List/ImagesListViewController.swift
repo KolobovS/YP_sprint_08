@@ -95,11 +95,11 @@ extension ImagesListViewController: UITableViewDataSource {
 }
 
 extension ImagesListViewController: ImagesListCellDelegate {
-    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+     func imageListCellDidTapLike(_ cell: ImagesListCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         let photo = photos[indexPath.row]
         let isLiked = !photo.isLiked
-        photos[indexPath.row].isLiked = isLiked
+        cell.setIsLiked(isLiked)
         UIBlockingProgressHUD.show()
         ImagesListService.shared.changeLike(photoId: photo.id, isLike: isLiked) { [weak self] result in
             guard let self = self else { return }
@@ -117,9 +117,10 @@ extension ImagesListViewController: ImagesListCellDelegate {
                             thumbImageURL: currentPhoto.thumbImageURL,
                             largeImageURL: currentPhoto.largeImageURL,
                             fullImageUrl: currentPhoto.fullImageUrl,
-                            isLiked: !currentPhoto.isLiked
+                            isLiked: isLiked
                         )
-                        self.photos[index] = updatedPhoto
+                        self.photos.remove(at: index)
+                        self.photos.insert(updatedPhoto, at: index)
                     }
                 case .failure(let error):
                     print("Error changing like: \(error)")

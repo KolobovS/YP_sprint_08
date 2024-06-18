@@ -155,7 +155,6 @@ struct PhotoResult: Codable {
     let width: Int
     let height: Int
     let color: String
-    let blurHash: String
     let likes: Int
     let likedByUser: Bool
     let description: String?
@@ -168,7 +167,6 @@ struct PhotoResult: Codable {
         case width
         case height
         case color
-        case blurHash = "blur_hash"
         case likes
         case likedByUser = "liked_by_user"
         case description

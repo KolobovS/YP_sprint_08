@@ -1,12 +1,17 @@
 import XCTest
 
 final class ImageFeedUITests: XCTestCase {
-    private let app = XCUIApplication()
+    private let app: XCUIApplication = {
+        let app = XCUIApplication()
+        app.launchArguments = ["testMode"]
+        return app
+    }()
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         continueAfterFailure = false
         app.launch()
+        
     }
     
     func testAuth() throws {
@@ -45,10 +50,7 @@ final class ImageFeedUITests: XCTestCase {
      func testFeed() throws {
         let tablesQuery = app.tables
         let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
-        cell.swipeUp()
-        
         sleep(3)
-        
         let cellToLike = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
         let likeButton = cellToLike.buttons["LikeButton"]
         likeButton.tap()

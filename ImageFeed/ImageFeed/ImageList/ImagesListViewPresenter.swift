@@ -28,7 +28,10 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
     
     func getNextPhotos(_ lastShowedPhotoIndex: Int) {
         if lastShowedPhotoIndex == imagesListService.photos.count {
-            imagesListService.fetchPhotosNextPage()
+            let testMode =  ProcessInfo.processInfo.arguments.contains("testMode")
+            if !testMode {
+                imagesListService.fetchPhotosNextPage()
+            }
         }
     }
     
